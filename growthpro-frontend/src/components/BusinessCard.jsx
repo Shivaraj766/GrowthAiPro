@@ -3,11 +3,14 @@ import { useState } from 'react';
 export default function BusinessCard({ info, setInfo }) {
   const [isRegenerating, setIsRegenerating] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
   const regenerateHeadline = async () => {
     setIsRegenerating(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/regenerate-headline?name=${info.name}&location=${info.location}`);
+      const res = await fetch(`${API_URL}/api/regenerate-headline?name=${info.name}&location=${info.location}`);
       const data = await res.json();
+      console.log('API response:', data);
       setInfo({ ...info, headline: data.headline });
     } catch (error) {
       console.error('Error regenerating headline:', error);
